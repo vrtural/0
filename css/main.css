@@ -37,6 +37,7 @@ section {
 h2, h3 {
     color: var(--h);
     margin-bottom: 0.5rem;
+    font-weight: ;
 }
 
 p {
