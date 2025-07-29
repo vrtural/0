@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="robots" content="noindex, nofollow">
+   <meta name="theme-color" content="#000000">
+   <meta name="description" content="this is my website where i can do something, share about myself, do some projects">
+
+   <meta property="og:title" content="Virtural Lab">
+   <meta property="og:description" content="Just experiments">
+   <meta property="og:image" content="https://s.theanh.wuaze.com/assets/og.jpg">
+   <meta property="og:url" content="https://s.theanh.wuaze.com/"> 
+   <meta property="og:type" content="website">
+
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+   <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+   <link rel="stylesheet" href="../css/projects.css">
+
+   <title>Virtural Lab</title>
+</head>
+<body>
+  
+   <div id="header">
+      <img src="../assets/logo.png" alt="logo">
+      <h1>AMPD Scripts</h1>
+   </div>
+
+   <main>
+      <section id="intro">
+         <h2>Auto Music PLaylist Downloader</h2>
+         <p>A simple script to download music pLaylists using a predefined setup</p>
+      </section>
+
+      <section id="features">
+         <h3>Features</h3>
+         <ul>
+            <li>Automatic environment check and setup</li>
+            <li>Downloads entire playlists or single videos</li>
+            <li>Converts audio to M4A format using FFmpeg</li>
+            <li>Embeds thumbnails and metadata</li>
+            <li>Simple folder navigation before downloading</li>
+        </ul>
+      </section>
+
+      <section id="usage">
+         <h3>Usage</h3>
+         <p>Copy and run the script in termux and follow the on-screen promts</p>
+      </section>
+
+      <section id="script">
+        <div>
+         <h3>Script</h3>
+         <button class="copy-btn" data-target="#code-1">📋 Copy</button>
+        </div>
+        <pre><code id="code-1">
+#!/data/data/com.termux/files/usr/bin/bash
+clear
+
+echo "📦 Đang kiểm tra các công cụ cần thiết..."
+sleep 3
+
+tools_ok=1
+missing=()
+
+# ===== Kiểm tra từng công cụ =====
+for tool in python ffmpeg yt-dlp iconv; do
+  if ! command -v "$tool" >/dev/null 2>&1; then
+    tools_ok=0
+    missing+=("$tool")
+  fi
+done
+
+# ===== Nếu thiếu, tiến hành setup =====
+if [ "$tools_ok" -eq 0 ]; then
+  echo "⚠️ Thiếu các công cụ sau: ${missing[*]}"
+  echo "🔧 Bắt đầu cài đặt..."
+  sleep 2
+
+  pkg update -y && pkg upgrade -y
+  pkg install -y python ffmpeg libiconv
+  pip install -U yt-dlp
+  termux-setup-storage
+
+  echo "✅ Cài đặt hoàn tất!"
+  sleep 2
+else
+  echo "✅ Đã đủ công cụ, bỏ qua setup."
+  sleep 1
+fi
+
+sleep 5
+
+# ===== Chọn thư mục lưu =====
+cd /storage/emulated/0/
+
+while true; do
+  clear
+  echo "Bạn đang ở: $(pwd)"
+  echo "-----------------------------------------------"
+  ls -1 | sed 's/^/📄 /'
+  echo "-----------------------------------------------"
+  echo ""
+
+  read -p "📁 Nhập tên thư mục muốn lưu (thư mục phải tồn tại): " folder
+
+  if [ -z "$folder" ]; then
+    echo "📂 Dùng thư mục hiện tại: $(pwd)"
+    break
+  elif [ -d "$folder" ]; then
+    cd "$folder"
+    echo ""
+    echo "✅ Đã vào thư mục: $(pwd)"
+    break
+  else
+    echo "❌ Thư mục '$folder' không tồn tại. Thử lại..."
+    sleep 2
+  fi
+done
+
+# ===== Nhập URL =====
+while true; do
+  echo ""
+  read -p "🔗 Nhập URL YouTube cần tải (playlist hoặc video): " url
+
+  if yt-dlp --simulate "$url" >/dev/null 2>&1; then
+    echo ""
+    echo "✅ URL hợp lệ. Tiến hành tải..."
+    break
+  else
+    echo ""
+    echo "❌ URL không hợp lệ hoặc không hỗ trợ. Vui lòng nhập lại."
+    sleep 2
+  fi
+done
+
+# ===== Tải xuống =====
+echo ""
+echo "🎬 Bắt đầu tải xuống..."
+sleep 2
+
+yt-dlp -f bestaudio --audio-format m4a -x --embed-thumbnail --add-metadata --prefer-ffmpeg "$url"
+
+# ===== Hiển thị kết quả =====
+echo ""
+echo "✅ Script hoàn tất chu trình"
+echo ""
+
+file_count=$(find . -maxdepth 1 -type f | wc -l)
+echo "📦 Tổng số file: $file_count"
+echo ""
+
+read -p "👉 Nhấn Enter để thoát..."
+clear
+echo "chúc một ngày tốt lành!"
+sleep 2
+exit 0
+        </code></pre>
+      </section>
+   </main>
+
+   <script src="../js/copy-code.js"></script>
+</body>
+</html>

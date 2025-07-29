@@ -8,6 +8,10 @@
     --h: #050505;
     --a: #555555;
     --a-hover: #ff0000;
+    --btn-bg: #050505;
+    --btn-fg: #ffffff;
+    --code-bg: #050505;
+    --code-fg: #ffffff;
     
 }
 
@@ -97,3 +101,23 @@ li {
 }
 
 /* 2: content */
+
+pre {
+    background-color: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 2rem;
+    padding: 1rem;
+}
+
+#script div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+#script div button {
+    background-color: var(--btn-bg);
+    color: var(--btn-fg);
+    padding:  0 0.3rem;
+    border-radius: 0.5rem;
+}
