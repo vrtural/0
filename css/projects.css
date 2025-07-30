@@ -109,13 +109,13 @@ pre {
     padding: 1rem;
 }
 
-#script div {
+.script div {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
 }
 
-#script div button {
+.script div button {
     background-color: var(--btn-bg);
     color: var(--btn-fg);
     padding:  0 0.3rem;
