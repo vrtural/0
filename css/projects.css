@@ -33,18 +33,21 @@ main {
 }
 
 section {
-    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
 }
 
 /* 0.1: text,header-text,link */
 
 h2, h3 {
     color: var(--h);
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 p {
     font-weight: 800;
+    margin-bottom:0.5rem;
 }
 
 a {
@@ -63,6 +66,13 @@ a::after {
     content: "\2197";
 }
 
+button {
+    background-color: var(--btn-bg);
+    color: var(--btn-fg);
+    padding:  0 0.3rem;
+    border-radius: 0.5rem;
+}
+
 /* 0.2: list */
 
 ul{
@@ -77,6 +87,13 @@ ul li::before {
     color: #ff0000;
 }
 
+ol {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0 0.4rem;
+}
+
 li {
     font-weight: 800;
 }
@@ -88,7 +105,7 @@ li {
     height: 10vh;
     background-color: var(--hd-bg);
     color: var(--hd-fg);
-    margin: 0;
+    margin: 0 0 1rem 0;
     padding: 0 0.8rem 0 0.8rem;
     display: flex;
     justify-content: left;
@@ -115,9 +132,3 @@ pre {
     margin-bottom: 1rem;
 }
 
-.script div button {
-    background-color: var(--btn-bg);
-    color: var(--btn-fg);
-    padding:  0 0.3rem;
-    border-radius: 0.5rem;
-}
