@@ -16,30 +16,29 @@
         height: 100vh;
         margin: 0;
         text-align: center;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        overflow: hidden;
     }
 
     h1 {
-        font-size: 5rem;
+        font-size: 15rem;
         margin: 0;
     }
 
-    button {
-        margin-top: 20px;
-        padding: 10px 20px;
-        background-color: white;
-        color: black;
-        border: none;
+    a {
+        all: unset;
         cursor: pointer;
-        font-family: 'Press Start 2P', monospace;
     }
-    button:hover {
-        background-color: gray;
-    }
+
 </style>
 </head>
 <body>
-    <h1>404</h1>
-    <h2>Page Not Found</h2>
-    <button onclick="location.href='index.html'">Go Back Home</button>
+    <a href="../index.html" target="_self">
+        <h1>404</h1>
+        <h2>Page Not Found</h2>
+        <p>click here to return</p>
+    </a>
 </body>
 </html>
